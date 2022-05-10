@@ -20,7 +20,7 @@ const swaggerOptions = {
             version: '1.0.0'
         },
         servers: [{
-            url : 'http://localhost/5555/'
+            url : 'https://localhost/5555/'
         }]
 
     },
@@ -34,16 +34,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json({ limit: "5mb" }))
 
 app.use('/account', accountRoute);
-/**
- * @swagger
- * /user/users:
- *  post:
- *      summary: This api is used to check if pos method is working or not
- *      description:This api is used to check if pos method is working or not
- *      responce: 
- *          200:
- *              description: To test the post method
- */
 app.use('/user', userRoute)
 
 
@@ -53,3 +43,5 @@ app.listen(port, (error) =>{
     throw error;
     console.log(`Server is running at ${port}`);
 });
+
+module.exports = {swaggerSpec}

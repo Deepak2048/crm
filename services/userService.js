@@ -3,7 +3,6 @@ const db = require('../database/database');
 const createUSer = (req, res) =>{
     
     const userInput = {
-        id : req.body.id,
         userName: req.body.userName,
         password: req.body.password,
         email: req.body.email,
@@ -19,7 +18,9 @@ console.log(userInput);
 console.log(req.body);
     const userInsertQuery = " insert into user set ?";
     db.query(userInsertQuery, userInput, (error, userDbREsponse) =>{
-        // if(error) throw error;
+        if(error) {
+            res.send(`${error.sqlMessage}`)
+        };
         res.send("User data inserted successfully")
     })
 }

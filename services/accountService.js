@@ -13,43 +13,23 @@ const read = require('body-parser/lib/read');
  */
 
 const createAccount = (req, res) =>{
-    const acountInput = {
-        accountId : req.body.accountId, 
+    const testInput = {
         accountName : req.body.accountName,
         craetedOn : new Date(),
         createdBy : req.body.createdBy,
         updatedOn : new Date(),
         updatedBy : req.body.updatedBy,
-        status : req.body.status
-
+        status :req.body.status
     };
- console.log(acountInput);
- console.log(req.body);
-    const accountInsertQuery = `insert into test set ?`;
-    db.query(accountInsertQuery, acountInput, (error, accountDbResponse) =>{
-        if(error)throw error;
-        res.send("Data inserted successfully to account",)
-    })
+    const insertquery = "insert into test set ?";
+
+    db.query(insertquery,testInput, (error , dbresponse) =>{
+        if(error){
+            res.send(error);
+        }
+        res.send("Data inserted successfully");
+    });
 }
 
-// const createAccount = (req, res) =>{
-//     const acountInput = {
-//         accountId : req.body.accountId, 
-//         accountName : req.body.accountName,
-//         craetedOn : new Date(),
-//         createdBy : req.body.createdBy,
-//         updatedOn : new Date(),
-//         updatedBy : req.body.updatedBy,
-//         status : req.body.status
-
-//     };
-//  console.log(acountInput);
-//  console.log(req.body);
-//     const accountInsertQuery = "insert into account set ?";
-//     db.query(accountInsertQuery, acountInput, (error, accountDbResponse) =>{
-//         if(error)throw error;
-//         res.send("Data inserted successfully to account")
-//     })
-// }
 
 module.exports = {createAccount}
