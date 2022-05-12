@@ -2,21 +2,21 @@ const express = require('express');
 
 const route = express.Router();
 
-
 const accountService = require('../services/accountService');
-const swaggerSpec = require('../app');
+
+route.post('/accounts', accountService.createAccount)
 
 /**
  * @swagger
  * /account/accounts/:
- *  post:
- *   description: This api is used to check if post method is working or not
- *   responses: 
- *       200:
- *           description: To test the post method
- *   
+ *  get:
+ *      description: This api is used to check if post method is working or not
+ *      responses:
+ *          200:
+ *              description: All the accounts details are listed successfully
  */
 
-route.post('/accounts', accountService.createAccount)
+route.get('/accounts', accountService.getAllAccounts)
+route.get('/accounts/:accountId', accountService.getByAccountId);
 
 module.exports = route;

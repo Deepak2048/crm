@@ -1,5 +1,6 @@
 const express = require("express");
 var bodyParser = require('body-parser')
+const cors = require('cors');
 require('dotenv').config()
 
 const db = require('./database/database')
@@ -8,30 +9,18 @@ const accountRoute = require('./router/accountRoutr');
 const userRoute = require('./router/userRoute');
 
 const app = express();
-const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
+const YAML = require('yamljs');
 
-const swaggerOptions = {
+const swaggerJSDocs = YAML.load("./api.yaml");
 
-    swaggerDefinition:{
-        openapi: '3.0.0',
-        info:{
-            title:"Welcome to Account and User  API",
-            version: '1.0.0'
-        },
-        servers: [{
-            url : 'https://localhost/5555/'
-        }]
 
-    },
-    apis:['./router/*.js']
-};
-
-const swaggerSpec = swaggerJsDoc(swaggerOptions);
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJSDocs));
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json({ limit: "5mb" }))
+
+app.use(cors())
 
 app.use('/account', accountRoute);
 app.use('/user', userRoute)
@@ -44,4 +33,4 @@ app.listen(port, (error) =>{
     console.log(`Server is running at ${port}`);
 });
 
-module.exports = {swaggerSpec}
+// module.exports = {swaggerJSDocs}

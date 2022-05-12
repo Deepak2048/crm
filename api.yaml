@@ -1,0 +1,159 @@
+swagger: "2.0.0"
+info:
+  title: "Welcome to Account and User  API"
+  description: this api is used to check if api  is working or not
+  version: 1.0.0
+  server:
+    -url: http://localhost:5555/
+    description: this is local url server
+schemes: [http,https]
+
+paths:
+
+#Post json/body & Body required
+  /user/users:
+    post:
+      summary: Add a new user
+      description: This api is used for users
+      produces:
+        -application/json
+      consumes:
+        -application/json
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          required: true
+            -username
+            -email
+            -password
+            -createdBy
+            -updatedBy
+            -status
+            -accountId
+          properties:
+            userName:
+              type: string
+            email:
+              type: string
+            password:
+              type: string
+            createdBy:
+              type: integer
+            updatedBy:
+              type: integer
+            status:
+              type: integer
+            accountId:
+              type: integer
+      responses:
+        '201':
+          description: Inserted data to user table.
+
+#get users
+  /user/users:
+    get:
+      summary: list all users
+      description: list all 
+      
+
+
+#get 
+  /user/users/{id}:
+    get:
+      summary: Fetch user by thire id.
+      description: List the specific use by id.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: user data listed successfully by id.
+
+
+
+#get
+  /user/users:
+    get:
+      summary: fetch all users.
+      description: fetching all users.
+      responses:
+        "200":
+          description: listed all users succcessfully
+        
+ 
+ 
+
+#get for all users
+  /user/users:
+    get:
+      summary: List all users.
+      description: listing all users
+      responses:
+        "200":
+          description: all tha users listed successfully.
+          shcema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+
+
+
+
+#Post for account api 
+  /account/accounts:
+    post:
+      summary: Add a new account
+      description: This api is used for account
+      produces:
+        -application/json
+      consumes:
+        -application/json
+      parameters:
+      - in: body
+        name: account
+        schema:
+          type: object
+          required: true
+            -accountName
+            -createdBy
+            -updatedBy
+            -status
+          properties:
+            accountName:
+              type: string
+            createdBy:
+              type: integer
+            updatedBy:
+              type: integer
+            status:
+              type: integer
+      responses:
+        '201':
+          description: Inserted data to account table.
+
+
+
+#get for account api
+  /account/accounts/{accountId}:
+    get:
+      summary: Fetch account by thire accountId.
+      description: List the specific use by accountId.
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema:
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: account data listed successfully by accountId.

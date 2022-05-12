@@ -1,16 +1,6 @@
 const db = require('../database/database');
-const { v4: uuidv4 } = require('uuid');
 const read = require('body-parser/lib/read');
 
-/**
- * @openapi
- * /account
- *  post:
- *      description:Response if app is running
- *          responce:
- *              '201':
- *                  description: Inserted successfully
- */
 
 const createAccount = (req, res) =>{
     const testInput = {
@@ -31,5 +21,32 @@ const createAccount = (req, res) =>{
     });
 }
 
+const getAllAccounts = (req, res)=>{
+    const listAllQuery = "select * from test";
+    db.query(listAllQuery, (error, accountAllDBResponse) =>{
+        if (error)throw error;
+        res.send({
+            message: "All the accounts details  are listed successfully",
+            ststusCode:200,
+            success: true,
+            payload:accountAllDBResponse
+        })
+    })
+}
 
-module.exports = {createAccount}
+const getByAccountId = (req, res)=>{
+    const listAllQuery = "select * from user where accountId = ?";
+    console.log(parseInt(req.params.accountId));
+    db.query(listAllQuery,[parseInt(req.params.accountId)], (error, accountDBResponse) =>{
+        if (error)throw error;
+        res.send({
+            message: "User  are listed successfully by Id",
+            ststusCode:200,
+            success: true,
+            payload:accountDBResponse[0]
+        })
+    })
+}
+
+
+module.exports = {createAccount, getAllAccounts, getByAccountId}
