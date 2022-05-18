@@ -5,8 +5,9 @@ require('dotenv').config()
 
 const db = require('./database/database')
 
-const accountRoute = require('./router/accountRoutr');
-const userRoute = require('./router/userRoute');
+const accountRoute = require('./account/accountRoute/accountRoutr');
+const userRoute = require('./user/userRoute/userRoute');
+const authRouter = require('./auth/route/authRout');
 
 const app = express();
 const swaggerUI = require('swagger-ui-express');
@@ -24,6 +25,7 @@ app.use(cors())
 
 app.use('/account', accountRoute);
 app.use('/user', userRoute)
+app.use('/register', authRouter);
 
 
 const port = process.env.PORT;

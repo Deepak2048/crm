@@ -51,12 +51,6 @@ paths:
         '201':
           description: Inserted data to user table.
 
-#get users
-  /user/users:
-    get:
-      summary: list all users
-      description: list all 
-      
 
 
 #get 
@@ -77,20 +71,31 @@ paths:
 
 
 
-#get
-  /user/users:
-    get:
-      summary: fetch all users.
-      description: fetching all users.
+
+#Put
+  /user/updateUser/{id}:
+    put:
+      summary: update user by id
+      description: Update the specific user by id.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+        type: integer
+        format: int64
       responses:
         "200":
-          description: listed all users succcessfully
+          description: user has been updated successfully by id.
+
+
+
         
  
  
 
 #get for all users
-  /user/users:
+  /user/allUsers:
     get:
       summary: List all users.
       description: listing all users
@@ -104,6 +109,24 @@ paths:
               properties:
                 id:
                   type: integer
+
+
+
+#Delete
+  /user/deleteUser/{d}:
+    delete:
+      summary: Delete user api
+      description: used to delete
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: user data deleted successfully by id.
 
 
 
@@ -157,3 +180,125 @@ paths:
       responses:
         "200":
           description: account data listed successfully by accountId.
+
+
+
+#get for all Acounts
+  /account/allAccounts:
+    get:
+      summary: List all accounts.
+      description: listing all accounts
+      responses:
+        "200":
+          description: all tha accounts are listed successfully.
+          shcema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+
+
+
+#Put
+  /account/updateAccount/{accountId}:
+    put:
+      summary: update account by accountId
+      description: Update the specific account by accountId.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: account has been updated successfully by accountId.
+
+
+
+#Delete
+  /account/deleteAccount/{accountId}:
+    delete:
+      summary: Delete account api
+      description: used to delete account
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: account data deleted successfully by id.
+
+
+
+#Post json/body & Body required
+  /register/signUp:
+    post:
+      summary: Register a new user
+      description: This api is used for user registration
+      produces:
+        -application/json
+      consumes:
+        -application/json
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          required: true
+            -name
+            gender
+            -email
+            -password
+          properties:
+            name:
+              type: string
+              example: "Enter your name"
+            gender:
+              type: string
+              example: "Enter your gender"
+            email:
+              type: string
+              example: "raj@gmail.com"
+            password:
+              type: string
+              example: "Enter your password"
+      responses:
+        '201':
+          description: User has been register successfully.
+
+
+
+#Post json/body & Body required
+  /register/login:
+    post:
+      summary: Login to a user
+      description: This api is used for user login
+      produces:
+        -application/json
+      consumes:
+        -application/json
+      parameters:
+      - in: body
+        name: user
+        schema:
+          type: object
+          required: true
+            -email
+            -password
+          properties:
+            email:
+              type: string
+              example: "raj@gmail.com"
+            password:
+              type: string
+              example: "Enter your password"
+      responses:
+        '201':
+          description: User has been Loged in successfully.

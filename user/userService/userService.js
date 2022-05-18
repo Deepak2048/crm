@@ -1,4 +1,4 @@
-const db = require('../database/database');
+const db = require('../../database/database');
 
 const createUSer = (req, res) =>{
     
@@ -8,14 +8,12 @@ const createUSer = (req, res) =>{
         email: req.body.email,
         createdOn : new Date(),
         createdBy : req.body.createdBy,
-        updatedOn : new Date(),
         updatedBy : req.body.updatedBy,
         status : req.body.status,
         accountId : req.body.accountId
     };
     
 console.log(userInput);
-console.log(req.body);
     const userInsertQuery = " insert into user set ?";
     db.query(userInsertQuery, userInput, (error, userDbREsponse) =>{
         if(error) {
@@ -67,4 +65,48 @@ const getUserByEmail = (req, res)=>{
     })
 };
 
-module.exports = {createUSer, getAllUser, getUserById, getUserByEmail };
+const commanDetails = (req, res) =>{
+    const innerQuery = "select * from test inner join user ON test.accountId = user.accountId";
+    db.query(innerQuery, (error, commanDbResponse) =>{
+
+        if (error) throw error;
+        res.send({
+            message: "Comman datas  are listed successfully ",
+            ststusCode:200,
+            success: true,
+            payload:commanDbResponse
+        })
+    })  
+}
+
+const updateUser = (req, res)=>{
+    const set = req.body;
+    const date = new Date();
+    const updateQuery = "update user set userName =? ,email =?, password =?, createdBy =?,updatedOn = ?,updatedBy =?, accountId =? where id = ?";
+    db.query(updateQuery,[set.userName, set.email,set.password,set.createdBy,set.updatedOn, set.updatedBy,set.accountId, req.params.id], (error, userDeleteDbResponse) =>{
+        if (error)throw error;
+        res.send({
+            message: "User  are updated successfully ",
+            ststusCode:200,
+            success: true,
+            payload:userDeleteDbResponse[0]
+        })
+    })
+
+};
+
+const deleteUserById = (req, res)=>{
+    const deleteUserQuery = "delete from user where id = ?";
+    console.log(parseInt(req.params.id));
+    db.query(deleteUserQuery,[parseInt(req.params.id)], (error, deleteUserDBResponse) =>{
+        if (error)throw error;
+        res.send({
+            message: "User data are deleted successfully by Id",
+            ststusCode:200,
+            success: true,
+            payload:deleteUserDBResponse[0]
+        })
+    })
+};
+
+module.exports = {createUSer, getAllUser, getUserById, getUserByEmail, commanDetails, updateUser,deleteUserById };
